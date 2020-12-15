@@ -21,7 +21,25 @@ Route::group([
     
 ],function(){
     
+    //passed
     Route::post('register','AuthController@register');
+
+    //passed
     Route::post('login','AuthController@login');
+
+    //passed
+    Route::post('product/add','ProductController@store');
+
+    //passed
+    Route::get('products/{token}','ProductController@allproducts');
+
+    //passed
+    Route::get('product/edit/{id}/{token}','ProductController@edit');
+
+    //passed
+    Route::put('product/update/{id}','ProductController@update');
+
+    //passed
+    Route::delete('product/delete/{id}','ProductController@destroy');
 
 });

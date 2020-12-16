@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function allProducts($token)
     {
 
-        $fileDirectory  = $this->baseUrl.'/product_images'; 
+        $fileDirectory  = $this->baseUrl.'/images/products'; 
         $user           = auth('users')->authenticate($token);
 
         $products       = Product::orderBy('id','DESC')->get();
@@ -150,7 +150,7 @@ class ProductController extends Controller
 
         }
 
-        $fileDirectory  = $this->baseUrl.'/product_images'; 
+        $fileDirectory  = $this->baseUrl.'/images/products'; 
 
         return response()->json([
             'success'   => true,

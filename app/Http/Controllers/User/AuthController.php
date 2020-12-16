@@ -30,7 +30,7 @@ class AuthController extends Controller
                 'errors'    => $validator->messages()->toArray(),
                 'message'   => 'Register is failed!'
 
-            ],200);
+            ],400);
         }
 
         $checkEmail = User::where('email',$request->email)->count();
@@ -77,7 +77,7 @@ class AuthController extends Controller
                 'errors'    => $validator->messages()->toArray(),
                 'message'   => ''
 
-            ],200);
+            ],400);
         }
 
         $jwt_token = null;
@@ -90,7 +90,7 @@ class AuthController extends Controller
                 'errors'    => [],
                 'message'   => 'Invalid email or password!'
 
-            ],200);
+            ],400);
         }
 
         return response()->json([

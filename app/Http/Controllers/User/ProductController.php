@@ -18,6 +18,7 @@ class ProductController extends Controller
         $this->baseUrl = $urlGenerator->to('/');
 
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -76,36 +77,27 @@ class ProductController extends Controller
         }
 
         //image validation
-        $productPicture = $request->product_image;
-        $fileName = '';
-        // $fileBin = null;
+        $image_name_to_store = '';
 
-        // if($productPicture === null) {
+        $image = $request->file('image');
+        if ($image) {
+            //full image name with extension
+            $image_name_with_ext = $image->getClientOriginalName();
 
-        //     $fileName = 'default.png';
+            //image name without extension
+            $image_name_without_ext = pathinfo($image_name_with_ext, PATHINFO_FILENAME);
 
-        // }else {
-        //     $generateName   = uniqid().'_'.time().date('Ymd').'_IMG';
-        //     $base64Image    = $productPicture;
-        //     $fileBin        = file_get_contents($base64Image);
-        //     $mimeType       = mime_content_type($base64Image);
+            //get extension of that image
+            $image_ext = $image->getClientOriginalExtension();
 
-        //     if('image/png' === $mimeType) {
-        //         $fileName = $generateName.'.png';
-        //     }else if('image/jpg' === $mimeType) {
-        //         $fileName = $generateName.'.jpg';
-        //     }else if('image/jpeg' === $mimeType) {
-        //         $fileName = $generateName.'.jpeg';
-        //     }else{
-        //         return response()->json([
+            //image name with encription
+            $image_name_to_store = $image_name_without_ext . '_' . time() . '_.' . $image_ext;
 
-        //             'success'   => false,
-        //             'errors'    => [],
-        //             'message'   => 'Only image is accepted'
-    
-        //         ],400);
-        //     }
-        // }
+            //public folder
+            $path = public_path('/images/products');
+            $image->move($path, $image_name_to_store);
+        }
+
 
         $userToken = $request->token;
         $user      = auth('users')->authenticate($userToken);
@@ -114,12 +106,9 @@ class ProductController extends Controller
            'title'      => $request->title,    
            'description'=> $request->description,     
            'price'      => $request->price,
-           'image'      => $fileName
+           'image'      => $image_name_to_store
         ]);
 
-        // if($productPicture){
-        //     file_put_contents('./product_images',$file_name,$fileBin);
-        // }
 
         return response()->json([
 
@@ -211,38 +200,27 @@ class ProductController extends Controller
 
         }
 
-
         //image validation
-        $productPicture = $request->product_image;
-        $fileName = '';
-        $fileBin = null;
+        $image_name_to_store = '';
 
-        // if($productPicture === null) {
+        $image = $request->file('image');
+        if ($image) {
+            //full image name with extension
+            $image_name_with_ext = $image->getClientOriginalName();
 
-        //     $fileName = 'default.png';
+            //image name without extension
+            $image_name_without_ext = pathinfo($image_name_with_ext, PATHINFO_FILENAME);
 
-        // }else {
-        //     $generateName   = uniqid().'_'.time().date('Ymd').'_IMG';
-        //     $base64Image    = $productPicture;
-        //     $fileBin        = file_get_contents($base64Image);
-        //     $mimeType       = mime_content_type($base64Image);
+            //get extension of that image
+            $image_ext = $image->getClientOriginalExtension();
 
-        //     if('image/png' === $mimeType) {
-        //         $fileName = $generateName.'.png';
-        //     }else if('image/jpg' === $mimeType) {
-        //         $fileName = $generateName.'.jpg';
-        //     }else if('image/jpeg' === $mimeType) {
-        //         $fileName = $generateName.'.jpeg';
-        //     }else{
-        //         return response()->json([
+            //image name with encription
+            $image_name_to_store = $image_name_without_ext . '_' . time() . '_.' . $image_ext;
 
-        //             'success'   => false,
-        //             'errors'    => [],
-        //             'message'   => 'Only image is accepted'
-    
-        //         ],400);
-        //     }
-        // }
+            //public folder
+            $path = public_path('/images/products');
+            $image->move($path, $image_name_to_store);
+        }
 
         $userToken = $request->token;
         $user      = auth('users')->authenticate($userToken);
@@ -251,12 +229,8 @@ class ProductController extends Controller
            'title'          => $request->title,    
            'description'    => $request->description,     
            'price'          => $request->price,
-           'image_'         => $fileName
+           'image'          => $image_name_to_store
         ]);
-
-        // if($productPicture){
-        //     file_put_contents('./product_images',$file_name,$fileBin);
-        // }
 
         return response()->json([
 

@@ -262,10 +262,6 @@ class ProductController extends Controller
 
         if($product->delete()){
 
-            if (!empty($getFile) && $getFile !== 'default.png') {
-                unlink('./product_images/'.$getFile);
-            }
-
             return response()->json([
                 'success'   => true,
                 'message'   => 'Product Deleted Successfully!'

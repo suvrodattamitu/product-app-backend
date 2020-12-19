@@ -98,7 +98,6 @@ class ProductController extends Controller
             $image->move($path, $image_name_to_store);
         }
 
-
         $userToken = $request->token;
         $user      = auth('users')->authenticate($userToken);
 
